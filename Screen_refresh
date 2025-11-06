@@ -1,0 +1,18 @@
+1st file
+@echo off
+start /min PowerShell.exe -NoProfile -ExecutionPolicy Bypass -Command "& 'C:\temp\test.ps1'"
+
+2nd file
+$i = 0
+
+while($true) {
+    Start-Sleep -Seconds 60
+$fooShell = New-Object -com "Wscript.shell"
+$fooShell.sendkeys("{SCROLLLOCK}")
+if ($i % 50 -eq 0)
+{
+     cls
+}
+$i++
+$i
+}
