@@ -1,0 +1,102 @@
+Troubleshooting
+Please follow the steps:
+Open CMD as administrator. Type:
+dism /online /cleanup-image /startcomponentcleanup
+dism /online /cleanup-image /ScanHealth
+dism /online /cleanup-image /RestoreHealth
+SFC /scannow
+gpupdate /force
+Best regards
+
+
+Windows update:
+
+net stop wuauserv
+net stop cryptSvc
+net stop bits
+net stop msiserver
+ren C:\Windows\SoftwareDistribution SoftwareDistribution.old
+ren C:\Windows\System32\catroot2 catroot2.old
+net start wuauserv
+net start cryptSvc
+net start bits
+net start msiserver
+
+================================================
+Get-AcceptedDomain -Identity (domena) – sprawdzenie czy domena jest akceptowalna
+================================================
+foreach($group in (Get-ADGroup -filter "name -like '*SERVER_NAME*'")){
+    Get-ADGroupMember -Identity $group |
+    select @{n='GroupName';e={$group.name}},samaccountname,name
+}
+================================================
+Set-MpPreference -UILockdown 0 lub 1
+
+0 żeby móc zobaczych threats 
+1 żeby to wyłączyć
+================================================
+Taskkill /pid numer procesu
+
+Sc queryex nazwa servicesu
+
+$id = Get-WmiObject -Class Win32_Service -Filter "Name LIKE 'wuauserv'" | Select-Object -ExpandProperty ProcessId
+Get-Process -Id $id
+taskkill -pid $id /f
+================================================
+Sprawdzanie certa dla 3389
+Get-WmiObject -Class "Win32_TSGeneralSetting" -Namespace root\cimv2\terminalservices|select SSLCertificateSHA1Hash
+
+
+wmic /namespace:\\root\cimv2\TerminalServices PATH Win32_TSGeneralSetting Get SSLCertificateSHA1Hash
+================================================
+$servers = "",""
+
+foreach($serv in $servers){
+get-hotfix -computername $serv | sort -Descending -Property installedon | select -First 6
+Write "=========="
+}
+================================================
+Get-ADObject –IncludeDeletedObjects -Filter "objectSid -eq 'S-1-5-21-547679855-216702531-854177664-57922'" | Select-Object name, objectClass
+================================================
+gpresult /scope user /h c:\temp\report_user.html
+gpresult /scope computer /h c:\temp\report_computer.html
+================================================
+rd /s c:\$Recycle.Bin	- empty recycle bin for all users
+================================================
+klist -li 0x3e7 purge
+Gpupdate /force
+================================================
+repadmin /syncall /AeD - force sync all DCs
+================================================
+Event Log
+AD
+<QueryList>
+<Query Id="0" Path="Security">
+<Select Path="Security">*[
+EventData[Data[@Name='TargetUserName']='meineda']
+ 
+]
+</Select>
+</Query>
+</QueryList>
+
+
+
+DNS
+<QueryList>
+  <Query Id="0" Path="Microsoft-Windows-DNSServer/Audit">
+    <Select Path="Microsoft-Windows-DNSServer/Audit">
+*[
+EventData[Data[@Name='Name']='customerportal-test.groupad1.com']
+ 
+]
+</Select>
+  </Query>
+</QueryList>
+================================================
+================================================
+================================================
+================================================
+================================================
+================================================
+================================================
