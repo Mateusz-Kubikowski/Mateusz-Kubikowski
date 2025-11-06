@@ -1,0 +1,28 @@
+
+	#Set letter for Recovery Partition
+		1. Run "Diskpart" via CMD, and run commands as below
+		2. List disk
+		3. Select disk X  ----- [X is the number of the OS disk]
+		4. List Partition
+		5. Select Partition X ------ [X is the number of the Recovery partition]
+		6. Assign letter=N
+		7. Exit
+	#Copy files from actual recovery partition to disk C:
+		8. xcopy N:\Recovery C:\Recovery /E /H /I
+	#Chenge destination of recovery mode
+		9. ReAgentc /info  ------ just to check actual settings
+		10. ReAgentc /disable
+		11. ReAgentc /setreimage /path C:\Recovery\WindowsRE /target C:\Windows
+		12. ReAgentc /enable
+		13. ReAgentc /info ------- confirm that recovery partition moved to correct place
+	#Delete old recovery partition
+		14. Diskpart
+		15. List Volume
+		16. Select Volume X ------ [X is the number of volume with letter N or old recovery partition
+		17. delete partition override
+		18. Exit
+	#Check if recovery mode works
+		19. reagentc /boottore 
+		20. Reboot
+		21. Open CMD in recovery mode and run some simple commands like diskpart -> list disk
+		22. Check system stability after booting it back
