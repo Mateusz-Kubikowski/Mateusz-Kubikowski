@@ -1,0 +1,30 @@
+=================================================================== 
+PART 1 - Disc Creation - Can be performed any time
+=================================================================== 
+1. Find Server, edit properties and add new hard disk
+2. Take online new disk, Initialize it in GPT mode and assign letter X:\ 
+3. Run robocopy command 
+robocopy E:\ X:\ /MIR /SEC /SECFIX /MT:16 /NP /TEE /log+:C:\Temp\robocopy.log
+ E:\ - source 
+X:\ - destination 
+4. Wait for moving files
+
+==============================================================================
+ Part 2 - Disk letter changing - this should be performed OOH
+==============================================================================
+1. Open computer management, find disk E:\ "Change drive letter and paths", 
+2. Select E: and change it to Z:\ 
+3. Sync files by running 
+robocopy Z:\ E:\ /MIR /SEC /SECFIX /MT:16 /NP /TEE /log+:C:\Temp\robocopy_sync.log
+4. Find disc X:\ and change letter to E:\ 
+
+=========================================================================== 
+Part 3 - Old disk deletion - should be performed after few days
+===========================================================================
+1. Delete old disk from virtualization side
+===========================================================================
+
+Revert
+
+1. Change letter of the new disk with letter E:\ to X:\, and then rename old disk with letter Z:\ back to letter E:\
+2. Delete newly created disk
