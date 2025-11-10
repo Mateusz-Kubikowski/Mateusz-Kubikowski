@@ -94,6 +94,11 @@ EventData[Data[@Name='Name']='customerportal-test.groupad1.com']
   </Query>
 </QueryList>
 ================================================
+ cd 'C:\Program Files\Windows Defender\'
+.\MpCmdRun.exe -removedefinitions -dynamicsignatures
+.\MpCmdRun.exe -SignatureUpdate
+Update-MpSignature
+get-mpcomputerstatus
 ================================================
 ================================================
 ================================================
