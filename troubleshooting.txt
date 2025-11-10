@@ -99,6 +99,9 @@ EventData[Data[@Name='Name']='customerportal-test.groupad1.com']
 .\MpCmdRun.exe -SignatureUpdate
 Update-MpSignature
 get-mpcomputerstatus
+
+
+mpam-fe.exe
 ================================================
 MDEClientAnalyzer
 TreeSize
